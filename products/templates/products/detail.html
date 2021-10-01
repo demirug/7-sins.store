@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Detail
+{% endblock %}
+
+{% block content %}
+    <h4>Name: {{ object.name }}</h4>
+    <h4>Description: {{ object.description }}</h4>
+    <h4>Price: {{ object.price }}</h4>
+    {% if object.image %}
+        <img src="{{ object.image.url }}" alt="">
+    {% endif %}
+    <br>
+    <button onclick="location.href = '{% url 'products:home' %}'">Back</button>
+{% endblock %}
