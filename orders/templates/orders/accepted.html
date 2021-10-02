@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+    <h3>Ваш заказ оформлен, спасибо что выбрали нас. C вами скоро свяжется менеджер</h3>
+    <button onclick="location.href = '{% url 'track' pk %}'">Отследить</button>
+     <button onclick="location.href = '{% url 'home' %}'">Хорошо</button>
+
+{% endblock %}

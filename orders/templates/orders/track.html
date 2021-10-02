@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Отслеживание{% endblock %}
+
+{% block content %}
+    <h3>Отслеживание состояния заказа</h3>
+    <br>
+    {% if order %}
+    <p>Состояние вашего заказа: <span style="color: green">{{ order.status }}</span></p>
+    {% else %}
+        <p>По вашему номеру не найден заказ. Попробуйте позже или свяжитесь с технической поддержкой</p>
+    {% endif %}
+
+    <button onclick="location.href = '{% url 'home' %}'">Вернутся на главную</button>
+
+{% endblock %}

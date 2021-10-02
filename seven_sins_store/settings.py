@@ -126,6 +126,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'pm.antondolia@gmail.com'
+EMAIL_HOST_PASSWORD = '2P5M5R8HP5F3'
+DEFAULT_FROM_EMAIL = 'pm.antondolia@gmail.com'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

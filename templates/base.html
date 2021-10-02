@@ -1,5 +1,7 @@
 {% url 'cart' as cart_url %}
 {% url 'home' as home_url %}
+{% url 'info' as info_url %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,8 +22,8 @@
             <a class="nav-link" href="{% url 'home' %}">Товары</a>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="">Обратная связь</a>
+          <li class="nav-item {% if request.path == info_url %}active{% endif %}">
+            <a class="nav-link" href="{% url 'info' %}">Информация</a>
           </li>
 
           <li class="nav-item {% if request.path == cart_url %}active{% endif %}">

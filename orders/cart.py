@@ -1,4 +1,5 @@
 from django.core.handlers.wsgi import WSGIRequest
+
 from products.models import Product
 
 
@@ -34,14 +35,28 @@ class Cart:
         self.cart_items.setdefault(key, 0)
         self.cart_items[key] = amount
 
+        if self.cart_items[key] > product.quantity:
+            self.cart_items[key] = product.quantity
+
         if self.cart_items[key] <= 0:
             del self.cart_items[key]
 
-        elif self.cart_items[key] > product.quantity:
-            self.cart_items[key] = product.quantity
-
         if save:
             self.save()
+
+    def updateQuantity(self):
+        """
+        Update quantity from database
+        :return Products QuerySet
+        """
+        products = Product.objects.filter(pk__in=self.cart_items.keys())
+        for product in products:
+            self.set(product, self.cart_items[str(product.pk)], False)
+        self.save()
+
+    def clear(self):
+        self.cart_items.clear()
+        self.save()
 
     def save(self):
         self.session['CART'] = self.cart_items
