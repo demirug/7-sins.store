@@ -18,7 +18,13 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from orders.views import cart
+from products.views import ProductDetailView, ProductListView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('product/', include(('products.urls', 'products'))),
+    path('<slug:slug>', ProductDetailView.as_view(), name='view'),
+    path('', ProductListView.as_view(), name='home'),
+    path('cart/', cart, name='cart'),
+    path('orders/', include(('orders.urls', 'orders')))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

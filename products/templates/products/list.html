@@ -6,7 +6,8 @@
     {% for object in object_list %}
          <h4>Name: {{ object.name }}</h4>
          <h4>Price: {{ object.price }}</h4>
-        <button onclick="location.href = '{% url 'products:view' object.slug %}'">Click</button>
+        <button onclick="location.href = '{% url 'view' object.slug %}'">Click</button>
+        <button onclick="location.href = '{% url 'orders:add' object.pk %}'">Add to cart</button>
         <hr>
     {% empty %}
         <h2>Sorry, here is nothing</h2>

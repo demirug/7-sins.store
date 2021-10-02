@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+    <form method="post" action="{% url 'orders:update' %}"> {% csrf_token %}
+        {% for product, amount in products.items %}
+            <h4>Name: {{ product.name }}</h4>
+            <p><span style="font-size: 20px">Price:</span> {{ product.price }} * <input type="number" name="PK__{{ product.pk }}" min="0" max="{{ product.quantity }}" value="{{ amount }}"> == {% widthratio product.price 1 amount %}</p>
+            <hr>
+        {% empty %}
+            <h2>Nothing</h2>
+        {% endfor %}
+            <h3>Total price: {{ totalPrice }}</h3>
+        <button type="submit">Обновить</button>
+    </form>
+
+{% endblock %}
