@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import dotenv_values
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+dotenv_cfg = dotenv_values(".env")
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -129,9 +131,9 @@ MEDIA_URL = '/media/'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'pm.antondolia@gmail.com'
-EMAIL_HOST_PASSWORD = '2P5M5R8HP5F3'
-DEFAULT_FROM_EMAIL = 'pm.antondolia@gmail.com'
+EMAIL_HOST_USER = dotenv_cfg['EMAIL_LOGIN']
+EMAIL_HOST_PASSWORD = dotenv_cfg['PASSWORD']
+DEFAULT_FROM_EMAIL = dotenv_cfg['FROM_EMAIL']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
