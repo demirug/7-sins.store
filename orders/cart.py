@@ -44,6 +44,17 @@ class Cart:
         if save:
             self.save()
 
+    def set_byID(self, product, amount, save=True):
+        key = str(product)
+        self.cart_items.setdefault(key, 0)
+        self.cart_items[key] = amount
+
+        if self.cart_items[key] <= 0:
+            del self.cart_items[key]
+
+        if save:
+            self.save()
+
     def updateQuantity(self):
         """
         Update quantity from database
