@@ -16,4 +16,6 @@ urlpatterns = [
     path('orders/', include(('orders.urls', 'orders'))),
     path('cart/', cart, name='cart'),
     path('track/<int:pk>', TrackView.as_view(), name='track'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
