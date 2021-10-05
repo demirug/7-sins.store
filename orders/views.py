@@ -8,6 +8,7 @@ from products.models import Product
 
 __all__ = ('cart', 'add_Product', 'updateCart', 'remove_Product', 'confirm')
 
+
 def confirm(request):
     cart = Cart(request)
 
@@ -63,15 +64,21 @@ def cart(request):
 
 
 def add_Product(request, pk):
-    product = Product.objects.get(pk=pk)
-    Cart(request).add(product, 1)
-    return redirect('cart')
+    product = Product.objects.filter(pk=pk).first()
+    if product:
+        Cart(request).add(product, 1)
+        return redirect('cart')
+    else:
+        return HttpResponseBadRequest('Error: Incorrect PK transmitted')
 
 
 def remove_Product(request, pk):
-    product = Product.objects.get(pk=pk)
-    Cart(request).set(product, 0)
-    return redirect('cart')
+    product = Product.objects.filter(pk=pk).first()
+    if product:
+        Cart(request).set(product, 0)
+        return redirect('cart')
+    else:
+        return HttpResponseBadRequest('Error: Incorrect PK transmitted')
 
 
 def updateCart(request):
