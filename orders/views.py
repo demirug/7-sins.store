@@ -1,4 +1,4 @@
-from django.http import HttpResponseBadRequest
+from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView
 
@@ -7,7 +7,6 @@ from orders.cart import Cart
 from products.models import Product
 
 __all__ = ('cart', 'add_Product', 'updateCart', 'remove_Product', 'confirm')
-
 
 def confirm(request):
     cart = Cart(request)
@@ -77,11 +76,11 @@ def remove_Product(request, pk):
 
 def updateCart(request):
     cart = Cart(request)
-    ids = [k[4:] for k in request.POST.keys() if str(k).startswith('PK__')]
-    for product in Product.objects.filter(pk__in=ids):
-        cart.set(product, int(request.POST['PK__' + str(product.pk)]), save=False)
-    cart.save()
-    return redirect('cart')
+    if request.POST['pk'] and request.POST['quantity']:
+        cart.set_byID(request.POST['pk'], int(request.POST['quantity']))
+        return HttpResponse('OK')
+    else:
+        return HttpResponseBadRequest('Incorrect POST data')
 
 
 class TrackView(DetailView):

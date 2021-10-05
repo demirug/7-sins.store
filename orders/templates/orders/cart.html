@@ -12,18 +12,20 @@
     <h2>Корзина</h2>
     <br>
 
-    <form method="post" action="{% url 'orders:update' %}"> {% csrf_token %}
+    <div>
         {% for product, amount in products.items %}
             <div class="product">
                 <h5>Наименование: {{ product.name }}</h5>
 
                 <p>
                 <span id="price">{{ product.price }}</span>
-                <input id="count" type="number" name="PK__{{ product.pk }}" min="0" max="{{ product.quantity }}" value="{{ amount }}">
-                <span id="total">0</span>
+                <input id="count" type="number" name="{{ product.pk }}" min="1" max="{{ product.quantity }}" value="{{ amount }}">
+                    <span id="total">0</span>
                 гривен
                 </p>
                 <button class="btn btn-primary" type="button" onclick="window.location.href='{% url 'orders:remove' product.pk %}'">Удалить</button>
+
+
             </div>
 
         {% empty %}
@@ -32,12 +34,12 @@
 
             {% if products.items %}
                 <h3>Total price: <span id="totalPrice"></span></h3>
-                <button class="btn btn-primary" type="submit">Обновить количество</button>
                 <hr>
                 <button class="btn btn-primary" type="button" onclick="window.location.href='{% url 'orders:confirm' %}'">Оформить заказ</button>
             {% endif %}
-    </form>
+    </div>
 
+    {% csrf_token %}
     <script src="{% static 'orders/js/priceCalculator.js' %}"></script>
 
 {% endblock %}
