@@ -1,13 +1,12 @@
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render, redirect
-
-from orders.cart import Cart
-
-__all__ = ('cart', 'add_Product', 'updateCart', 'remove_Product', 'confirm', 'track')
+from django.views.generic import DetailView
 
 from orders.models import OrderItem, Order
-
+from orders.cart import Cart
 from products.models import Product
+
+__all__ = ('cart', 'add_Product', 'updateCart', 'remove_Product', 'confirm')
 
 
 def confirm(request):
@@ -85,5 +84,6 @@ def updateCart(request):
     return redirect('cart')
 
 
-def track(request, pk):
-    return render(request, 'orders/track.html', context={'order': Order.objects.filter(pk=pk).first()})
+class TrackView(DetailView):
+    model = Order
+    template_name = 'orders/track.html'
