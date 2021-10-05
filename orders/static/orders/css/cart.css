@@ -1,0 +1,10 @@
+.product {
+    background-color: rgba(128, 128, 128, 0.4);
+    margin: 0 250px 50px 250px;
+    border: 2px black solid;
+}
+
+.product>button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
