@@ -39,7 +39,6 @@ class Order(models.Model):
 
     def __updateStatus(self):
         if self.__status == self.StatusChoice.DONE or self.__status == self.StatusChoice.CANCELED or self.status == self.StatusChoice.NEW:
-            self.status = self.__status
             raise ValidationError(f'Изменение на данный статус запрещено')
 
         elif self.status == self.StatusChoice.ACCEPTED:
