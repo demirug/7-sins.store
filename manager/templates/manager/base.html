@@ -16,7 +16,7 @@
   <a class="title" href="/">7-sins.store</a>
   <a {% if request.path == products_url %}class="active"{% endif %} href="{{ products_url }}">Продукция</a>
   <a {% if request.path == orders_url %}class="active"{% endif %} href="{{ orders_url }}">Заказы</a>
-  <a href="">Выход</a>
+  <a href="{% url 'authorization:logout' %}">Выход</a>
 </div>
 
 <div class="content">
