@@ -17,6 +17,7 @@
           <thead class="thead-dark">
             <tr>
               <th scope="col">Номер заказа</th>
+              <th scope="col">Дата заказа</th>
               <th scope="col">Сумма заказа</th>
               <th scope="col">Статус</th>
               <th scope="col">&nbsp;</th>
@@ -27,6 +28,7 @@
                 <div>
                     <tr>
                       <th>№{{ object.pk }}</th>
+                      <td>{{ object.timestamp|date:"d M Y" }} {{ object.timestamp|time:"H:i" }}</td>
                       <td>{{ object.price }} гривен</td>
                         {% if object.status == 'NEW' %}
                             <td style="color: lightgreen">{{ object.status }}</td>
