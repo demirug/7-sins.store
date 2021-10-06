@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
@@ -9,14 +11,18 @@ from products.models import Product
 __all__ = ('ProductListView', 'OrderListView', 'editProduct', 'createProduct', 'changeOrder')
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
+    login_url = '/authorization/login/'
+    redirect_field_name = 'next'
     model = Product
     template_name = 'manager/productsList.html'
     ordering = ['pk']
     paginate_by = 10
 
 
-class OrderListView(ListView):
+class OrderListView(LoginRequiredMixin, ListView):
+    login_url = '/authorization/login/'
+    redirect_field_name = 'next'
     model = Order
     template_name = 'manager/ordersList.html'
     ordering = ['-pk']
@@ -33,24 +39,28 @@ class OrderListView(ListView):
         ).order_by('custom_order')
 
 
+@login_required(redirect_field_name='next', login_url='/authorization/login/')
 def changeOrder(request, pk):
-    form = OrderModelForm(data=request.POST or None, instance=get_object_or_404(Order, pk=pk))
+    order = get_object_or_404(Order, pk=pk)
+    form = OrderModelForm(data=request.POST or None, instance=order)
     if form.is_valid():
         form.save()
         return redirect('manager:home')
     else:
-        return render(request, 'manager/form.html', {'form': form, 'title': 'Редактирование заказа'})
+        return render(request, 'manager/orderForm.html', {'form': form, 'order': order})
 
 
+@login_required(redirect_field_name='next', login_url='/authorization/login/')
 def createProduct(request):
     form = ProductModelForm(data=request.POST or None, files=request.FILES or None)
     if form.is_valid():
         form.save()
         return redirect('manager:home')
     else:
-        return render(request, 'manager/form.html', {'form': form, 'title': 'Создание товара'})
+        return render(request, 'manager/productForm.html', {'form': form})
 
 
+@login_required(redirect_field_name='next', login_url='/authorization/login/')
 def editProduct(request, pk):
     product = get_object_or_404(Product, pk=pk)
     form = ProductModelForm(data=request.POST or None, files=request.FILES or None, instance=product)
@@ -58,4 +68,4 @@ def editProduct(request, pk):
         form.save()
         return redirect('manager:home')
     else:
-        return render(request, 'manager/form.html', {'form': form, 'title': 'Редактирование товара'})
+        return render(request, 'manager/productForm.html', {'form': form})
