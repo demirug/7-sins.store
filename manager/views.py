@@ -13,7 +13,6 @@ __all__ = ('ProductListView', 'OrderListView', 'editProduct', 'createProduct', '
 
 class ProductListView(LoginRequiredMixin, ListView):
     login_url = '/authorization/login/'
-    redirect_field_name = 'next'
     model = Product
     template_name = 'manager/productsList.html'
     ordering = ['pk']
@@ -22,7 +21,6 @@ class ProductListView(LoginRequiredMixin, ListView):
 
 class OrderListView(LoginRequiredMixin, ListView):
     login_url = '/authorization/login/'
-    redirect_field_name = 'next'
     model = Order
     template_name = 'manager/ordersList.html'
     ordering = ['-pk']
@@ -39,7 +37,7 @@ class OrderListView(LoginRequiredMixin, ListView):
         ).order_by('custom_order', '-timestamp')
 
 
-@login_required(redirect_field_name='next', login_url='/authorization/login/')
+@login_required(login_url='/authorization/login/')
 def changeOrder(request, pk):
     order = get_object_or_404(Order, pk=pk)
     form = OrderModelForm(data=request.POST or None, instance=order)
@@ -50,7 +48,7 @@ def changeOrder(request, pk):
         return render(request, 'manager/orderForm.html', {'form': form, 'order': order})
 
 
-@login_required(redirect_field_name='next', login_url='/authorization/login/')
+@login_required(login_url='/authorization/login/')
 def createProduct(request):
     form = ProductModelForm(data=request.POST or None, files=request.FILES or None)
     if form.is_valid():
@@ -60,7 +58,7 @@ def createProduct(request):
         return render(request, 'manager/productForm.html', {'form': form})
 
 
-@login_required(redirect_field_name='next', login_url='/authorization/login/')
+@login_required(login_url='/authorization/login/')
 def editProduct(request, pk):
     product = get_object_or_404(Product, pk=pk)
     form = ProductModelForm(data=request.POST or None, files=request.FILES or None, instance=product)
