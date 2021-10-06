@@ -6,7 +6,8 @@
 
 {% block content %}
     <h4>Name: {{ object.name }}</h4>
-    <h4>Description: {{ object.description }}</h4>
+    <h4>Description:</h4>
+    {{ object.description|safe }}
     <h4>Price: {{ object.price }}</h4>
     {% if object.image %}
         <img src="{{ object.image.url }}" alt="">
