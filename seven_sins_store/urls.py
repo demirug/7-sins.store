@@ -11,6 +11,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('info/', info, name='info'),
 
+    path('authorization/', include(('authorization.urls', 'authorization'))),
+
     path('<slug:slug>', ProductDetailView.as_view(), name='view'),
     path('', ProductListView.as_view(), name='home'),
 
