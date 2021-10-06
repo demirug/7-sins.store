@@ -3,7 +3,8 @@
 {% block title %}Редактирование товара{% endblock %}
 
 {% block head %}
-
+    {% load static %}
+    <script src="{% static 'manager/js/ckeditor/ckeditor.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -15,5 +16,9 @@
         <button type="submit">Отправить</button>
     </form>
     </div>
+    <script>
+
+        CKEDITOR.replace('id_description')
+    </script>
 
 {% endblock %}
