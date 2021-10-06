@@ -1,0 +1,23 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Изменение заказа{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="wrapper">
+        <a  class="btn btn-info" href={% url 'manager:products' %}>Назад</a>
+        <br><br>
+        <p>Email: {{ order.email }}</p>
+        <p>Номер телефона: {{ order.phone }}</p>
+        <p>Дата заказа: {{ order.timestamp }}</p>
+    <form method="POST" accept-charset="utf-8" enctype="multipart/form-data"> {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Отправить</button>
+    </form>
+    </div>
+
+{% endblock %}
