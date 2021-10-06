@@ -36,7 +36,7 @@ class OrderListView(LoginRequiredMixin, ListView):
                 models.When(status="CANCELED", then=4),
                 models.When(status="DONE", then=3),
                 output_field=models.IntegerField())
-        ).order_by('custom_order')
+        ).order_by('custom_order', '-timestamp')
 
 
 @login_required(redirect_field_name='next', login_url='/authorization/login/')
