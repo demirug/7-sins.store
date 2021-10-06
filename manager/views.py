@@ -45,7 +45,7 @@ def changeOrder(request, pk):
     form = OrderModelForm(data=request.POST or None, instance=order)
     if form.is_valid():
         form.save()
-        return redirect('manager:home')
+        return redirect('manager:orders')
     else:
         return render(request, 'manager/orderForm.html', {'form': form, 'order': order})
 
@@ -55,7 +55,7 @@ def createProduct(request):
     form = ProductModelForm(data=request.POST or None, files=request.FILES or None)
     if form.is_valid():
         form.save()
-        return redirect('manager:home')
+        return redirect('manager:products')
     else:
         return render(request, 'manager/productForm.html', {'form': form})
 
@@ -66,6 +66,6 @@ def editProduct(request, pk):
     form = ProductModelForm(data=request.POST or None, files=request.FILES or None, instance=product)
     if form.is_valid():
         form.save()
-        return redirect('manager:home')
+        return redirect('manager:products')
     else:
         return render(request, 'manager/productForm.html', {'form': form})
