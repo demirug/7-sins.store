@@ -6,7 +6,7 @@ from orders.models import OrderItem, Order
 from orders.cart import Cart
 from products.models import Product
 
-__all__ = ('cart', 'add_Product', 'updateCart', 'remove_Product', 'confirm')
+__all__ = ('cart', 'add_Product', 'updateCart', 'remove_Product', 'confirm', 'TrackView')
 
 
 def confirm(request):

@@ -1,0 +1,83 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Отслеживание{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="wrapper">
+        <center><h3>Продукция</h3></center>
+        <hr>
+        <span style="font-weight: lighter; font-size: 25px">Выберите для редактирования</span>
+        <a style="float: right" class="btn btn-primary btn-sm" href="{% url 'manager:create' %}" role="button">Создать товар</a>
+        {% if object_list %}
+
+        <table class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">pk</th>
+              <th scope="col">Наименование</th>
+              <th scope="col">Цена</th>
+              <th scope="col">Доступно</th>
+              <th scope="col">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody>
+              {% for object in object_list %}
+                <div>
+                    <tr>
+                      <th>{{ object.pk }}</th>
+                      <td><a href="{% url 'view' object.slug %}">{{ object.name }}</a></td>
+                      <td>{{ object.price }} гривен</td>
+                        {% if object.quantity < 5 %}
+                            <td style="color: red;">{{ object.quantity }}</td>
+                        {% else %}
+                            <td style="color: green;">{{ object.quantity }}</td>
+                        {% endif %}
+                     <td><a class="btn btn-primary btn-sm" href="{% url 'manager:edit' object.pk %}" role="button">Редактировать</a></td>
+                    </tr>
+                </div>
+              {% endfor %}
+          </tbody>
+        </table>
+
+
+            <nav aria-label="...">
+              <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+                    </li>
+                {% else %}
+                     <li class="page-item disabled">
+                      <a class="page-link" href="" tabindex="-1">Previous</a>
+                    </li>
+                {% endif %}
+
+                {% for i in page_obj.paginator.page_range %}
+                    {% if i < page_obj.number|add:'5' and i > page_obj.number|add:'-5' %}
+                        <li class="page-item {% if i == page_obj.number %}active{% endif %}"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+
+                  {% if page_obj.has_next %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                      </li>
+                  {% else %}
+                      <li class="page-item disabled">
+                        <a class="page-link" href="">Next</a>
+                      </li>
+                  {% endif %}
+
+              </ul>
+            </nav>
+        {% else %}
+            <center><h5>Продукция еще не создана</h5></center>
+        {% endif %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% url 'manager:products' as products_url %}
+{% url 'manager:orders' as orders_url %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}7-sins.store{% endblock %}</title>
+    {% load static %}
+    {% block head %}{% endblock %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous"></head>
+    <link rel="stylesheet" href="{% static 'manager/css/sidebar.css' %}">
+<body>
+
+<div class="sidebar">
+  <a class="title" href="/">7-sins.store</a>
+  <a {% if request.path == products_url %}class="active"{% endif %} href="{{ products_url }}">Продукция</a>
+  <a {% if request.path == orders_url %}class="active"{% endif %} href="{{ orders_url }}">Заказы</a>
+  <a href="">Выход</a>
+</div>
+
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>
