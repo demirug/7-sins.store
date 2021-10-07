@@ -19,8 +19,8 @@
         {% for field in form %}
              <p>{{ field.label_tag }} {{ field }}</p>
         {% endfor %}
-        <a  class="btn btn-info" href={% url 'manager:orders' %}>Назад</a>
-        <button style="float: right" class="btn btn-info" type="submit">Сохранить</button>
+        <a  class="btn btn-success" href={% url 'manager:orders' %}>Назад</a>
+        <button style="float: right" class="btn btn-success" type="submit">Сохранить</button>
     </form>
 
     <br>
