@@ -63,8 +63,12 @@ def cart(request):
 def add_Product(request, pk):
     product = Product.objects.filter(pk=pk).first()
     if product:
-        Cart(request).add(product, 1)
-        return redirect('cart')
+        if product.quantity == 0:
+            messages.error(request, 'Данного товара нет в наличии')
+            return redirect('view', product.slug)
+        else:
+            Cart(request).add(product, 1)
+            return redirect('cart')
     else:
         return HttpResponseBadRequest('Error: Incorrect PK transmitted')
 
