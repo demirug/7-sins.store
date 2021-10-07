@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate
 
 
 class UserLoginForm(forms.Form):
-    login = forms.CharField(label='Логин', required=True)
-    password = forms.CharField(label='Пароль', required=True, widget=forms.PasswordInput())
+    login = forms.CharField(label='Логин', required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(label='Пароль', required=True, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     def clean(self, *args, **kwargs):
         login = self.cleaned_data.get('login')
