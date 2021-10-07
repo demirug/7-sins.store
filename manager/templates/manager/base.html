@@ -6,12 +6,16 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}7-sins.store{% endblock %}</title>
-    {% load static %}
-    {% block head %}{% endblock %}
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous"></head>
+
+    {% load static %}
     <link rel="stylesheet" href="{% static 'manager/css/sidebar.css' %}">
-    <link rel="stylesheet" href="{% static 'manager/css/alert.css' %}">
+    <link rel="stylesheet" href="{% static 'css/alert.css' %}">
+    <script src="{% static 'js/alert.js' %}"></script>
+
+    {% block head %}{% endblock %}
 <body>
 
 <div class="sidebar">
@@ -33,11 +37,6 @@
         </div>
 
     {% endfor %}
-    <script>
-        $('.alert>button').click(function (){
-            $(this).parent().remove();
-        });
-    </script>
 {% endif %}
 
     {% block content %}{% endblock %}
