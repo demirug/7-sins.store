@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
@@ -42,7 +43,9 @@ def changeOrder(request, pk):
     order = get_object_or_404(Order, pk=pk)
     form = OrderModelForm(data=request.POST or None, instance=order)
     if form.is_valid():
-        form.save()
+        if form.has_changed():
+            form.save()
+            messages.success(request, 'Состояния заказа было сохранено')
         return redirect('manager:orders')
     else:
         return render(request, 'manager/orderForm.html', {'form': form, 'order': order})
@@ -53,6 +56,7 @@ def createProduct(request):
     form = ProductModelForm(data=request.POST or None, files=request.FILES or None)
     if form.is_valid():
         form.save()
+        messages.success(request, 'Товар был успешно создан')
         return redirect('manager:products')
     else:
         return render(request, 'manager/productForm.html', {'form': form, 'title': 'Создание товара'})
@@ -63,7 +67,9 @@ def editProduct(request, pk):
     product = get_object_or_404(Product, pk=pk)
     form = ProductModelForm(data=request.POST or None, files=request.FILES or None, instance=product)
     if form.is_valid():
-        form.save()
+        if form.has_changed():
+            form.save()
+            messages.success(request, 'Товар был успешно изменен')
         return redirect('manager:products')
     else:
         return render(request, 'manager/productForm.html', {'form': form, 'title': 'Редактирование товара'})

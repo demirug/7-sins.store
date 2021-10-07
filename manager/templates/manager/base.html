@@ -8,8 +8,10 @@
     <title>{% block title %}7-sins.store{% endblock %}</title>
     {% load static %}
     {% block head %}{% endblock %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous"></head>
     <link rel="stylesheet" href="{% static 'manager/css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'manager/css/alert.css' %}">
 <body>
 
 <div class="sidebar">
@@ -20,8 +22,29 @@
 </div>
 
 <div class="content">
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% else %}alert-success{% endif %}">
+                {{ message }}
+              <button>
+                <span aria-hidden="true">&times;</span>
+              </button>
+        </div>
+    {% endfor %}
+{% endif %}
+
     {% block content %}{% endblock %}
 </div>
+
+<script>
+
+
+
+    $('.alert>button').click(function (){
+        $(this).parent().remove();
+    });
+</script>
 
 </body>
 </html>
