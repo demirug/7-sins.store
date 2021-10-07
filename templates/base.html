@@ -39,10 +39,25 @@
       </div>
     </nav>
 
-<center>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% else %}alert-success{% endif %}">
+                    {{ message }}
+                  <button>
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+
+        {% endfor %}
+        <script>
+            $('.alert>button').click(function (){
+                $(this).parent().remove();
+            });
+        </script>
+    {% endif %}
+
 {% block content %}
 
 {% endblock %}
-</center>
 </body>
 </html>
