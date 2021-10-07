@@ -16,7 +16,9 @@
         <p>Дата заказа: {{ order.timestamp|date:'d M Y' }} {{ order.timestamp|time:"H:i" }}</p>
         <p>Стоимость заказа: {{ order.price }} гривен</p>
     <form method="POST" accept-charset="utf-8" enctype="multipart/form-data"> {% csrf_token %}
-        {{ form.as_p }}
+        {% for field in form %}
+             <p>{{ field.label_tag }} {{ field }}</p>
+        {% endfor %}
         <a  class="btn btn-info" href={% url 'manager:orders' %}>Назад</a>
         <button style="float: right" class="btn btn-info" type="submit">Сохранить</button>
     </form>
@@ -28,7 +30,7 @@
 
 
         <div class="product">
-            <p>Наименование: <a href="{{ productItem.product.get_absolute_url }}">{{ productItem.product }}</a></p>
+            <p>Наименование: <a target="_blank" href="{{ productItem.product.get_absolute_url }}">{{ productItem.product }}</a></p>
             <p>Количество: {{ productItem.count }} единиц</p>
             <p>Стоимость: {{ productItem.calcPrice }} гривен</p>
         </div>

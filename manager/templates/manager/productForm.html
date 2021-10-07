@@ -12,7 +12,9 @@
     <div class="wrapper">
         <center><h4>{{ title }}</h4></center>
     <form method="POST" accept-charset="utf-8" enctype="multipart/form-data"> {% csrf_token %}
-        {{ form.as_p }}
+        {% for field in form %}
+             <p>{{ field.label_tag }} {{ field }}</p>
+        {% endfor %}
         <br>
         <a  class="btn btn-info" href={% url 'manager:products' %}>Назад</a>
         <button style="float: right" type="submit" class="btn btn-info">Сохранить</button>

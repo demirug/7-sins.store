@@ -48,6 +48,12 @@ def changeOrder(request, pk):
             messages.success(request, 'Состояния заказа было сохранено')
         return redirect('manager:orders')
     else:
+
+        for tag in form.errors.as_data():
+            for validationError in form.errors.as_data()[tag]:
+                for error in validationError:
+                    messages.error(request, error)
+
         return render(request, 'manager/orderForm.html', {'form': form, 'order': order})
 
 
@@ -59,6 +65,10 @@ def createProduct(request):
         messages.success(request, 'Товар был успешно создан')
         return redirect('manager:products')
     else:
+        for tag in form.errors.as_data():
+            for validationError in form.errors.as_data()[tag]:
+                for error in validationError:
+                    messages.error(request, error)
         return render(request, 'manager/productForm.html', {'form': form, 'title': 'Создание товара'})
 
 
@@ -72,4 +82,8 @@ def editProduct(request, pk):
             messages.success(request, 'Товар был успешно изменен')
         return redirect('manager:products')
     else:
+        for tag in form.errors.as_data():
+            for validationError in form.errors.as_data()[tag]:
+                for error in validationError:
+                    messages.error(request, error)
         return render(request, 'manager/productForm.html', {'form': form, 'title': 'Редактирование товара'})
