@@ -9,6 +9,14 @@ from django.utils.translation import gettext_lazy as _
 class OrderItem(models.Model):
     product = models.ForeignKey('products.Product', null=True, on_delete=models.SET_NULL)
     count = models.PositiveIntegerField()
+    price = models.FloatField(default=-1)
+
+    def calcPrice(self):
+        return self.price * self.count
+
+    def clean(self):
+        if self.pk is None:
+            self.price = self.product.price
 
     def __str__(self):
         return self.product.name + ' | ' + str(self.count) + ' item'
