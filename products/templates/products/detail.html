@@ -3,15 +3,48 @@
 {% block title %}
     Detail
 {% endblock %}
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'products/css/detail.css' %}">
+{% endblock %}
 
 {% block content %}
-    <h4>Name: {{ object.name }}</h4>
-    <h4>Description:</h4>
-    {{ object.description|safe }}
-    <h4>Price: {{ object.price }}</h4>
-    {% if object.image %}
-        <img src="{{ object.image.url }}" alt="">
-    {% endif %}
-    <br>
-    <button onclick="location.href = '{% url 'home' %}'">Back</button>
+    <div class="main-content-wrapper clearfix">
+
+        <div class="single-product-area section-padding-100 clearfix" style="margin-left: 100px">
+
+                <div class="row">
+                    <div class="col-12 col-lg-7">
+                        <div id="product_details_slider" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img class="w-100" src="{{ object.image.url }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-5">
+                        <div class="single_product_desc">
+                            <!-- Product Meta Data -->
+                            <div class="product-meta-data">
+                                <div class="line"></div>
+                                <p class="product-price"><span style="color: #fbb710">{{ object.price|floatformat:"0" }}</span>₴</p>
+                                    <h2>{{ object.name }}</h2>
+                                {% if object.quantity > 0 %}
+                                <p style="color: greenyellow; font-size: 20px"> В наличии</p>
+                                {% else %}
+                                    <p style="color: red; font-size: 20px"> Нет в наличии</p>
+                                {% endif %}
+                            </div>
+
+                            <div class="short_overview my-5">
+                                {{ object.description|safe }}
+                            </div>
+                            
+                            <a href="{% url 'orders:add' object.pk %}" class="btn amado-btn" {% if product.quantity == 0 %}disabled="disabled"{% endif %}>Добавить в корзину</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
