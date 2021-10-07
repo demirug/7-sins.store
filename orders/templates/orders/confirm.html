@@ -1,27 +1,18 @@
 {% extends "base.html" %}
 
 {% block title %}Cart{% endblock %}
-
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'orders/css/confirm.css' %}">
+{% endblock %}
 {% block content %}
-    <form method="post" action="{% url 'orders:confirm' %}"> {% csrf_token %}
-        {% for product, amount in products.items %}
-            <h4>Name: {{ product.name }}</h4>
-            <p><span style="font-size: 20px">Price:</span> {{ product.price }} * {{ amount }} == {% widthratio product.price 1 amount %}</p>
-            <hr>
-        {% endfor %}
-        <div style="background-color: gray; margin: 100px 100px 100px 100px; border: 2px solid black">
-            <h3>Данные доставки</h3>
-            <p>ФИО: <input type="text" name="full_name" maxlength="200" required></p>
-            <p>Email: <input type="email" name="email" maxlength="254" required></p>
-            <p>Номер телефона: <input type="tel" name="phone" maxlength="12" required></p>
-            <p>Адрес: <input type="text" name="address" maxlength="300" required></p>
-            {% if products.items %}
-                <h3>Цена: <span style="color: red">{{ totalPrice }}</span> гривен</h3>
-                <button onclick="location.href = '{% url 'cart' %}'">Назад</button>
-                <button type="submit">Подтвердить</button>
-                <br><br>
-            {% endif %}
-        </div>
-    </form>
-
+    <div class="form">
+        <form method="post" action="{% url 'orders:confirm' %}"> {% csrf_token %}
+            <center><h3>Подтверждение заказа</h3></center>
+             {% for field in form %}
+                 <p>{{ field.label_tag }} {{ field }}</p>
+            {% endfor %}
+            <center><button type="submit" class="btn btn-primary">Отправить</button></center>
+        </form>
+    </div>
 {% endblock %}
