@@ -31,20 +31,17 @@
                 <span aria-hidden="true">&times;</span>
               </button>
         </div>
+
     {% endfor %}
+    <script>
+        $('.alert>button').click(function (){
+            $(this).parent().remove();
+        });
+    </script>
 {% endif %}
 
     {% block content %}{% endblock %}
 </div>
-
-<script>
-
-
-
-    $('.alert>button').click(function (){
-        $(this).parent().remove();
-    });
-</script>
 
 </body>
 </html>
