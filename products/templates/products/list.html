@@ -1,15 +1,34 @@
 {% extends "base.html" %}
 
 {% block title %}Shop{% endblock %}
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href={% static 'products/css/list.css' %}>
+{% endblock %}
+
+{% block cart %}{{ cartLen }}{% endblock %}
 
 {% block content %}
-    {% for object in object_list %}
-         <h4>Name: {{ object.name }}</h4>
-         <h4>Price: {{ object.price }}</h4>
-        <button onclick="location.href = '{% url 'view' object.slug %}'">Click</button>
-        <button onclick="location.href = '{% url 'orders:add' object.pk %}'">Add to cart</button>
-        <hr>
-    {% empty %}
-        <h2>Sorry, here is nothing</h2>
-    {% endfor %}
+
+
+            <div class="amado-pro-catagory clearfix">
+                {% for object in object_list %}
+                    <div class="single-products-catagory clearfix">
+                        <a href="{% url 'view' object.slug %}">
+                            <img src="{{ object.image.url }}" alt="">
+                            <div class="hover-content">
+                                <div class="line"></div>
+                                <h4>{{ object.name }}</h4>
+                                <p>Стоимость: {{ object.price|floatformat:"0" }}₴</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+
+    <script src="{% static 'products/js/plugins.js' %}"></script>
+    <script src="{% static 'products/js/active.js' %}"></script>
+
 {% endblock %}
