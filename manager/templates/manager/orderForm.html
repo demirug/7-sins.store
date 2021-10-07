@@ -3,31 +3,38 @@
 {% block title %}Изменение заказа{% endblock %}
 
 {% block head %}
-
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'manager/css/order.css' %}">
 {% endblock %}
 
 {% block content %}
-    
     <div class="wrapper">
-        <a  class="btn btn-info" href={% url 'manager:orders' %}>Назад</a>
+        <center><h4>Изменение заказа</h4></center>
         <br><br>
         <p>Email: {{ order.email }}</p>
         <p>Номер телефона: {{ order.phone }}</p>
-        <p>Дата заказа: {{ order.timestamp }}</p>
+        <p>Дата заказа: {{ order.timestamp|date:'d M Y' }} {{ order.timestamp|time:"H:i" }}</p>
+        <p>Стоимость заказа: {{ order.price }} гривен</p>
     <form method="POST" accept-charset="utf-8" enctype="multipart/form-data"> {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Отправить</button>
+        <a  class="btn btn-info" href={% url 'manager:orders' %}>Назад</a>
+        <button style="float: right" class="btn btn-info" type="submit">Сохранить</button>
     </form>
-    
+
+    <br>
+    <center><h4>Элементы заказа</h4></center>
+
     {% for productItem in order.orderItems.all %}
-        <div style="margin: 100px 100px 100px 100px; border: 2px solid black">
-            <p>Название {{ productItem.product }}</p>
-            <p>Количество {{ productItem.count }}</p>
+
+
+        <div class="product">
+            <p>Наименование: <a href="{{ productItem.product.get_absolute_url }}">{{ productItem.product }}</a></p>
+            <p>Количество: {{ productItem.count }} единиц</p>
+            <p>Стоимость: {{ productItem.calcPrice }} гривен</p>
         </div>
     {% endfor %}
-    
-    <h3>Общая стоимсть: {{ order.price }} гривен</h3>
-    
+    <br>
+
     </div>
 
 {% endblock %}

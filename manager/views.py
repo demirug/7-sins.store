@@ -55,7 +55,7 @@ def createProduct(request):
         form.save()
         return redirect('manager:products')
     else:
-        return render(request, 'manager/productForm.html', {'form': form})
+        return render(request, 'manager/productForm.html', {'form': form, 'title': 'Создание товара'})
 
 
 @login_required(login_url='/authorization/login/')
@@ -66,4 +66,4 @@ def editProduct(request, pk):
         form.save()
         return redirect('manager:products')
     else:
-        return render(request, 'manager/productForm.html', {'form': form})
+        return render(request, 'manager/productForm.html', {'form': form, 'title': 'Редактирование товара'})

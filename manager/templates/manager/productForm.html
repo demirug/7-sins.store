@@ -1,6 +1,6 @@
 {% extends "manager/base.html" %}
 
-{% block title %}Редактирование товара{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block head %}
     {% load static %}
@@ -10,10 +10,12 @@
 {% block content %}
 
     <div class="wrapper">
-        <a  class="btn btn-info" href={% url 'manager:products' %}>Назад</a>
+        <center><h4>{{ title }}</h4></center>
     <form method="POST" accept-charset="utf-8" enctype="multipart/form-data"> {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Отправить</button>
+        <br>
+        <a  class="btn btn-info" href={% url 'manager:products' %}>Назад</a>
+        <button style="float: right" type="submit" class="btn btn-info">Сохранить</button>
     </form>
     </div>
     <script>
