@@ -31,6 +31,7 @@ class Order(models.Model):
     email = models.EmailField(blank=True)
     phone = models.CharField(max_length=12, blank=True)
     address = models.CharField(max_length=300, blank=True)
+    additional = models.TextField(blank=True, null=True)
 
     class StatusChoice(models.TextChoices):
         NEW = 'NEW', _('Новый')
