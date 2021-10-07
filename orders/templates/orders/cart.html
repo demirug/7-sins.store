@@ -9,37 +9,46 @@
 
 {% block content %}
 
-    <h2>Корзина</h2>
+    <center><h2>Корзина</h2></center>
     <br>
 
-    <div>
+    {% if products.items %}
+
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">&nbsp;</th>
+          <th scope="col">Имя</th>
+          <th scope="col">Цена</th>
+          <th scope="col">Количество</th>
+          <th scope="col">&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
         {% for product, amount in products.items %}
-            <div class="product">
-                <h5>Наименование: {{ product.name }}</h5>
-
-                <p>
-                <span id="price">{{ product.price }}</span>
-                <input id="count" type="number" name="{{ product.pk }}" min="1" max="{{ product.quantity }}" value="{{ amount }}">
-                    <span id="total">0</span>
-                гривен
-                </p>
-                <button class="btn btn-primary" type="button" onclick="window.location.href='{% url 'orders:remove' product.pk %}'">Удалить</button>
-
-
-            </div>
-
-        {% empty %}
-            <h2>Пусто</h2>
+            <tr class="product">
+              <td><a href='{% url 'view' product.slug %}'><img src="{{ product.image.url }}" ></a></td>
+              <td>{{ product.name }}</td>
+              <td><span id="price">{{ product.price }}</span>₴</td>
+              <td><input id="count" type="number" name="{{ product.pk }}" min="1" max="{{ product.quantity }}" value="{{ amount }}"></td>
+              <td><button class="btn btn-primary" type="button" onclick="window.location.href='{% url 'orders:remove' product.pk %}'">Удалить</button></td>
+            </tr>
         {% endfor %}
+      </tbody>
+    </table>
 
-            {% if products.items %}
-                <h3>Total price: <span id="totalPrice"></span></h3>
-                <hr>
-                <button class="btn btn-primary" type="button" onclick="window.location.href='{% url 'orders:confirm' %}'">Оформить заказ</button>
-            {% endif %}
-    </div>
+    {% if products.items %}
+        <div class="total">
+            <h3>Итоговая цена: <span id="totalPrice"></span>₴</h3>
+            <hr>
+            <button class="btn btn-primary" type="button" onclick="window.location.href='{% url 'orders:confirm' %}'">Оформить заказ</button>
+        </div>
+    {% endif %}
 
     {% csrf_token %}
     <script src="{% static 'orders/js/priceCalculator.js' %}"></script>
+    {% else %}
+        <center><h3>Empty</h3></center>
+    {% endif %}
 
 {% endblock %}
