@@ -1,7 +1,9 @@
+from django.contrib import messages
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import DetailView
 
+from orders.forms import OrderModelForm
 from orders.models import OrderItem, Order
 from orders.cart import Cart
 from products.models import Product
@@ -19,34 +21,29 @@ def confirm(request):
     products = Product.objects.filter(pk__in=cart.cart_items.keys())
     totalPrice = sum([cart.cart_items[str(product.pk)] * product.price for product in products])
 
-    if request.method == "POST":
-        if request.POST['full_name'] and request.POST['email'] and request.POST['phone'] and request.POST['address']:
-            order = Order()
-            order.price = totalPrice
-            order.full_name = request.POST['full_name']
-            order.email = request.POST['email']
-            order.phone = request.POST['phone']
-            order.address = request.POST['address']
+    form = OrderModelForm(request.POST or None)
 
-            # Order has double save to init PK for ManyToMany field
-            order.save()
-
-            for product in products:
-                item = OrderItem()
-                item.product = product
-                item.count = cart.cart_items[str(product.pk)]
-                item.save()
-                order.orderItems.add(item)
-            order.save()
-            order.sendEmail(order.StatusChoice.NEW)
-            cart.clear()
-            return render(request, 'orders/accepted.html', context={'pk': order.pk})
-        else:
-            return HttpResponseBadRequest('Incorrect POST data')
+    if form.is_valid():
+        order = form.save()
+        for product in products:
+            item = OrderItem()
+            item.product = product
+            item.count = cart.cart_items[str(product.pk)]
+            item.save()
+            order.orderItems.add(item)
+        order.save()
+        order.sendEmail(order.StatusChoice.NEW)
+        cart.clear()
+        return render(request, 'orders/accepted.html', context={'pk': order.pk})
     else:
+
+        for tag in form.errors.as_data():
+            for validationError in form.errors.as_data()[tag]:
+                for error in validationError:
+                    messages.error(request, error)
+
         return render(request, 'orders/confirm.html', context={
-            'cart': cart.cart_items,
-            'products': {product: cart.cart_items[str(product.pk)] for product in products},
+            'form': form,
             'totalPrice': totalPrice
         })
 
