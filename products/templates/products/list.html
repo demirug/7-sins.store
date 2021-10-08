@@ -15,7 +15,11 @@
                 {% for object in object_list %}
                     <div class="single-products-catagory clearfix">
                         <a href="{% url 'view' object.slug %}">
+                            {% if object.image %}
                             <img src="{{ object.image.url }}" alt="">
+                            {% else %}
+                                <img src="{% static "/image/noImage.png" %}" alt="">
+                            {% endif %}
                             <div class="hover-content">
                                 <div class="line"></div>
                                 <h4>{{ object.name }}</h4>

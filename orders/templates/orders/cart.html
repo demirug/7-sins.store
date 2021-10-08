@@ -27,7 +27,11 @@
       <tbody>
         {% for product, amount in products.items %}
             <tr class="product">
-              <td><a href='{% url 'view' product.slug %}'><img src="{{ product.image.url }}" ></a></td>
+              {% if products.image %}
+                <td><a href='{% url 'view' product.slug %}'><img src="{{ product.image.url }}" ></a></td>
+              {% else %}
+                    <td><a href='{% url 'view' product.slug %}'><img src="{% static "/image/noImage.png" %}"></a></td>
+              {% endif %}
               <td>{{ product.name }}</td>
               <td><span id="price">{{ product.price }}</span>₴</td>
               <td><input id="count" type="number" name="{{ product.pk }}" min="1" max="{{ product.quantity }}" value="{{ amount }}"></td>

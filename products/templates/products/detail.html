@@ -18,7 +18,11 @@
                         <div id="product_details_slider" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
+                                    {% if object.image %}
                                     <img class="w-100" src="{{ object.image.url }}">
+                                    {% else %}
+                                        <img class="w-100" src="{% static "/image/noImage.png" %}">
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
