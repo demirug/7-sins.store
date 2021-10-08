@@ -27,7 +27,7 @@
       <tbody>
         {% for product, amount in products.items %}
             <tr class="product">
-              {% if products.image %}
+              {% if product.image %}
                 <td><a href='{% url 'view' product.slug %}'><img src="{{ product.image.url }}" ></a></td>
               {% else %}
                     <td><a href='{% url 'view' product.slug %}'><img src="{% static "/image/noImage.png" %}"></a></td>
