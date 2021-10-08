@@ -18,6 +18,10 @@ class OrderItem(models.Model):
         if self.pk is None:
             self.price = self.product.price
 
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.product.name + ' | ' + str(self.count) + ' item'
 
