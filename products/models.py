@@ -6,11 +6,12 @@ from django.utils.text import slugify
 
 class Product(models.Model):
     name = models.CharField(max_length=100, verbose_name='Название товара')
+    article = models.CharField(max_length=100, verbose_name='Артикул', blank=True)
     slug = models.SlugField(max_length=100, allow_unicode=True, blank=True, unique=True)
     price = models.FloatField(default=0, verbose_name='Цена')
     description = models.TextField(blank=True, verbose_name='Описание товара')
     quantity = models.PositiveIntegerField(verbose_name='Количество товара')
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(upload_to='product', null=True, blank=True)
 
     def __str__(self):
         return self.name
