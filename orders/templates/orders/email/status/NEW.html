@@ -2,10 +2,38 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     </head>
     <body>
-        <h3>Вы оформили заказ на сайте 7-sins.store</h3>
-        <h4>Статус вашего заказа: <span style="color: green; font-weight: bold">NEW</span></h4>
-        <p>Вы можете отследить свой заказ по адрессу http://7-sins.store/track/{{ pk }}</p>
+        <center>
+            <h3>Статус вашего заказа на сайте 7-sins.store был изменен</h3>
+            <h4>Новый статус вашего заказа: <span style="color: lime; font-weight: bold">Новый</span></h4>
+            <p>Вы можете отследить свой заказ по адрессу http://7-sins.store/track/{{ pk }}</p>
+        </center>
+        <br>
+        <hr>
+
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Имя</th>
+              <th scope="col">Цена</th>
+              <th scope="col">Количество</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ordproduct in products %}
+                <tr class="product">
+                  <td>{{ ordproduct.product.name }}</td>
+                  <td>{{ ordproduct.price }}₴</td>
+                  <td>{{ ordproduct.count }}</td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <hr>
+        <h3>Итоговая цена:{{ totalPrice }}₴</h3>
+
     </body>
 </html>

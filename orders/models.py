@@ -82,7 +82,11 @@ class Order(models.Model):
     def sendEmail(self, status: StatusChoice):
         subject, from_email, to = 'Заказ на сайте 7-sins.store', 'Track Info', self.email
 
-        html_content = render_to_string('orders/email/status/' + status + '.html', {'pk': self.pk})
+        html_content = render_to_string('orders/email/status/' + status + '.html', {
+            'pk': self.pk,
+            'products': self.orderItems.all(),
+            'totalPrice': self.price
+        })
         text_content = strip_tags(html_content)
         msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
         msg.attach_alternative(html_content, "text/html")
