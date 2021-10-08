@@ -31,6 +31,7 @@ def confirm(request):
             item.count = cart.cart_items[str(product.pk)]
             item.save()
             order.orderItems.add(item)
+        order.price = totalPrice
         order.save()
         order.sendEmail(order.StatusChoice.NEW)
         cart.clear()
