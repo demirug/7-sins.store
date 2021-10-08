@@ -36,6 +36,9 @@
             <p>Наименование: <a target="_blank" href="{{ productItem.product.get_absolute_url }}">{{ productItem.product }}</a></p>
             <p>Количество: {{ productItem.count }} единиц</p>
             <p>Стоимость: {{ productItem.calcPrice }} гривен</p>
+            {% if productItem.product.article %}
+            <p>Артикул: {{ productItem.product.article }}</p>
+            {% endif %}
         </div>
     {% endfor %}
     <br>
