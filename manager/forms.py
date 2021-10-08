@@ -7,7 +7,8 @@ from products.models import Product
 class ProductModelForm(forms.ModelForm):
 
     name = forms.CharField(label='Название товара', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    slug = forms.CharField(label='Slug', widget=forms.TextInput(attrs={'class': 'form-control'}))
+    article = forms.CharField(label='Артикул', required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    slug = forms.CharField(label='Slug', required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     price = forms.IntegerField(label='Цена', widget=forms.NumberInput(attrs={'class': 'form-control'}))
     quantity = forms.IntegerField(label='Доступное количество товара', widget=forms.NumberInput(attrs={'class': 'form-control'}))
 
