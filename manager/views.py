@@ -9,7 +9,7 @@ from manager.forms import ProductModelForm, OrderModelForm
 from orders.models import Order
 from products.models import Product
 
-__all__ = ('ProductListView', 'OrderListView', 'editProduct', 'createProduct', 'changeOrder')
+__all__ = ('ProductListView', 'OrderListView', 'editProduct', 'createProduct', 'deleteProduct', 'changeOrder')
 
 
 class ProductListView(LoginRequiredMixin, ListView):
@@ -60,6 +60,7 @@ def changeOrder(request, pk):
 @login_required(login_url='/authorization/login/')
 def createProduct(request):
     form = ProductModelForm(data=request.POST or None, files=request.FILES or None)
+    print(form.instance)
     if form.is_valid():
         form.save()
         messages.success(request, 'Товар был успешно создан')
@@ -87,3 +88,11 @@ def editProduct(request, pk):
                 for error in validationError:
                     messages.error(request, error)
         return render(request, 'manager/productForm.html', {'form': form, 'title': 'Редактирование товара'})
+
+
+@login_required(login_url='/authorization/login/')
+def deleteProduct(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    product.delete()
+    messages.success(request, 'Товар был успешно удален')
+    return redirect('manager:products')
