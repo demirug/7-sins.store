@@ -18,6 +18,10 @@
         <br>
         <a  class="btn btn-success" href={% url 'manager:products' %}>Назад</a>
         <button style="float: right" type="submit" class="btn btn-success">Сохранить</button>
+        <br><br>
+        {% if form.instance.pk %}
+        <a  style="float: right" class="btn btn-danger" href={% url 'manager:delete' form.instance.pk %}>Удалить</a>
+        {% endif %}
     </form>
     </div>
     <script>
