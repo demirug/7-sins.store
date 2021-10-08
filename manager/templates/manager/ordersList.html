@@ -45,6 +45,7 @@
         </table>
 
 
+            {% if page_obj.paginator.num_pages > 1 %}
             <nav aria-label="...">
               <ul class="pagination justify-content-center">
                 {% if page_obj.has_previous %}
@@ -75,6 +76,8 @@
 
               </ul>
             </nav>
+                {% endif %}
+                
         {% else %}
             <center><h5>Продукция еще не создана</h5></center>
         {% endif %}
