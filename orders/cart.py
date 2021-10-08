@@ -60,9 +60,13 @@ class Cart:
         Update quantity from database
         :return Products QuerySet
         """
+        keys = set(self.cart_items.keys())
         products = Product.objects.filter(pk__in=self.cart_items.keys())
         for product in products:
+            keys.remove(str(product.pk))
             self.set(product, self.cart_items[str(product.pk)], False)
+        for key in keys:
+            del self.cart_items[key]
         self.save()
 
     def clear(self):
