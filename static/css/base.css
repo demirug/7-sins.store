@@ -1,0 +1,49 @@
+.page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.content-wrap {
+  padding-bottom: 6rem;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 6rem;
+  padding-top: 20px;
+  color:#f0f9ff;
+  background-color:#282d32;
+}
+
+.footer ul {
+  padding:0;
+  list-style:none;
+  text-align:center;
+  font-size:18px;
+  line-height:1.6;
+  margin-bottom:0;
+}
+
+.footer li {
+  padding:0 10px;
+}
+
+.footer ul a {
+  color: white;
+  text-decoration:none;
+  opacity:0.8;
+}
+
+.footer ul a:hover {
+  opacity:1;
+}
+
+.footer .copyright {
+  margin-top:15px;
+  text-align:center;
+  font-size:13px;
+  color:#aaa;
+  margin-bottom:0;
+}

@@ -8,53 +8,62 @@
     <meta charset="UTF-8">
     <title>{% block title %}7-sins.store{% endblock %}</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/alert.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <script src="{% static 'js/alert.js' %}"></script>
     {% block head %}{% endblock %}
+
+
 </head>
 <body>
 
-      <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd">
-      <a class="navbar-brand" href="{% url 'home' %}">7-sins.store</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item {% if request.path == home_url %}active{% endif %}">
-            <a class="nav-link" href="{% url 'home' %}">Товары</a>
-          </li>
 
-        {% if user.is_authenticated %}
-          <li class="nav-item ">
-            <a class="nav-link" href="{% url 'manager:products' %}">Панель управления</a>
-          </li>
-        {% endif %}
+    <div class="page-container">
+        <div class="content-wrap">
 
-          <li class="nav-item {% if request.path == cart_url %}active{% endif %}">
-          {% load cart_extras %}
-        <a class="nav-link" href="{% url 'cart' %}">Корзина ({% cart_size request %})</a>
-          </li>
+              <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd">
+              <a class="navbar-brand" href="{% url 'home' %}">7-sins.store</a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item {% if request.path == home_url %}active{% endif %}">
+                    <a class="nav-link" href="{% url 'home' %}">Товары</a>
+                  </li>
 
+                {% if user.is_authenticated %}
+                  <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'manager:products' %}">Панель управления</a>
+                  </li>
+                {% endif %}
 
-        </ul>
-      </div>
-    </nav>
+                  <li class="nav-item {% if request.path == cart_url %}active{% endif %}">
+                  {% load cart_extras %}
+                <a class="nav-link" href="{% url 'cart' %}">Корзина ({% cart_size request %})</a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
 
-        {% for message in messages %}
-            <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% else %}alert-success{% endif %}">
-                    {{ message }}
-                  <button>
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-            </div>
+            {% for message in messages %}
+                <div class="alert {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}alert-danger{% else %}alert-success{% endif %}">
+                        {{ message }}
+                      <button>
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                </div>
 
-        {% endfor %}
+            {% endfor %}
 
-{% block content %}
+            {% block content %}
 
-{% endblock %}
+            {% endblock %}
+        </div>
+        {% include "footer.html" %}
+    </div>
 </body>
 </html>
