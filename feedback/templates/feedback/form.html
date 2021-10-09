@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Обратная связь{% endblock %}
+{% block head %}
+    {% load static %}
+    <link rel="stylesheet" href={% static "feedback/css/style.css" %}>
+{% endblock %}
+{% block content %}
+    <div class="feedback">
+    <center><h2>Обратная связь</h2></center>
+    <form method="post"> {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <center><button type="submit" class="btn btn-primary">Отправить</button></center>
+    </form>
+    </div>
+{% endblock %}
