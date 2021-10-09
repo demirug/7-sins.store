@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'authorization',
     'products',
     'orders',
+    'feedback',
     'manager',
 ]
 
