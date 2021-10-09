@@ -8,5 +8,7 @@ urlpatterns = [
     path('edit/<int:pk>', editProduct, name='edit'),
     path('create/', createProduct, name='create'),
     path('delete/<int:pk>', deleteProduct, name='delete'),
-    path('order/<int:pk>', changeOrder, name='order')
+    path('order/<int:pk>', changeOrder, name='order'),
+    path('feedback/', FeedbackListView.as_view(), name='feedback'),
+    path('feedback/<int:pk>', answerFeedback, name='feedback_info'),
 ]

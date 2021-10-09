@@ -5,11 +5,12 @@ from django.db import models
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
 
-from manager.forms import ProductModelForm, OrderModelForm
+from feedback.models import Feedback
+from manager.forms import ProductModelForm, OrderModelForm, FeedbackModelForm
 from orders.models import Order
 from products.models import Product
 
-__all__ = ('ProductListView', 'OrderListView', 'editProduct', 'createProduct', 'deleteProduct', 'changeOrder')
+__all__ = ('ProductListView', 'OrderListView', 'FeedbackListView', 'editProduct', 'createProduct', 'deleteProduct', 'changeOrder', 'answerFeedback',)
 
 
 class ProductListView(LoginRequiredMixin, ListView):
@@ -36,6 +37,22 @@ class OrderListView(LoginRequiredMixin, ListView):
                 models.When(status="DONE", then=3),
                 output_field=models.IntegerField())
         ).order_by('custom_order', '-timestamp')
+
+
+class FeedbackListView(LoginRequiredMixin, ListView):
+    login_url = '/authorization/login/'
+    model = Feedback
+    template_name = 'manager/feedbackList.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Feedback.objects.annotate(
+            custom_order=models.Case(
+                models.When(answer="", then=0),
+                output_field=models.IntegerField(),
+                default=1,
+            )
+        ).order_by('custom_order', 'timestamp')
 
 
 @login_required(login_url='/authorization/login/')
@@ -96,3 +113,15 @@ def deleteProduct(request, pk):
     product.delete()
     messages.success(request, 'Товар был успешно удален')
     return redirect('manager:products')
+
+
+@login_required(login_url='/authorization/login/')
+def answerFeedback(request, pk):
+    feedback = get_object_or_404(Feedback, pk=pk)
+    form = FeedbackModelForm(request.POST or None, instance=feedback)
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'Ответ был размещен')
+        return redirect('manager:feedback')
+    else:
+        return render(request, 'manager/feedbackForm.html', context={'form': form, 'object': feedback})

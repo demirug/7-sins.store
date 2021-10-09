@@ -1,0 +1,28 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Отправка ответа{% endblock %}
+
+{% block content %}
+
+    <div class="wrapper">
+        <center><h4>Ответ на вопрос</h4></center>
+        <hr>
+        <p>Имя: {{ object.full_name }}</p>
+        <p>Тема: {{ object.subject }}</p>
+        <p>Email: {{ object.email }}</p>
+        <p>Вопрос: {{ object.question }}</p>
+        {% if not object.answer %}
+    <form method="post"> {% csrf_token %}
+        {% for field in form %}
+             <p>{{ field.label_tag }} {{ field }}</p>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Отправить</button>
+    </form>
+        {% else %}
+            <p>Выданый ответ: {{ object.answer }}</p>
+        {% endif %}
+        <br>
+        <a href="{% url 'manager:feedback' %}" class="btn btn-success">Назад</a>
+    </div>
+
+{% endblock %}

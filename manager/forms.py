@@ -1,5 +1,6 @@
 from django import forms
 
+from feedback.models import Feedback
 from orders.models import Order
 from products.models import Product
 
@@ -26,3 +27,11 @@ class OrderModelForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['full_name', 'address', 'status']
+
+
+class FeedbackModelForm(forms.ModelForm):
+    answer = forms.CharField(label='Ответ', required=True, widget=forms.Textarea(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = Feedback
+        fields = ['answer']

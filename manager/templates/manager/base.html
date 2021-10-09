@@ -1,6 +1,6 @@
 {% url 'manager:products' as products_url %}
 {% url 'manager:orders' as orders_url %}
-
+{% url 'manager:feedback' as feedback_url %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +22,7 @@
   <a class="title" href="/">7-sins.store</a>
   <a {% if request.path == products_url %}class="active"{% endif %} href="{{ products_url }}">Продукция</a>
   <a {% if request.path == orders_url %}class="active"{% endif %} href="{{ orders_url }}">Заказы</a>
+  <a {% if request.path == feedback_url %}class="active"{% endif %} href="{{ feedback_url }}">Обратная связь</a>
   <a href="{% url 'authorization:logout' %}">Выход</a>
 </div>
 
