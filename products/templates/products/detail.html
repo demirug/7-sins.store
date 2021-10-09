@@ -32,14 +32,15 @@
                             <!-- Product Meta Data -->
                             <div class="product-meta-data">
                                 <div class="line"></div>
-                                <p class="product-price"><span style="color: #fbb710">{{ object.price|floatformat:"0" }}</span>₴</p>
                                     <h2>{{ object.name }}</h2>
                                 {% if object.quantity > 0 %}
-                                <p style="color: greenyellow; font-size: 20px"> В наличии</p>
+                                <p style="color: darkgreen; font-size: 20px"> В наличии</p>
                                 {% else %}
                                     <p style="color: red; font-size: 20px"> Нет в наличии</p>
                                 {% endif %}
                             </div>
+
+                        <h5>Цена: {{ product.price|floatformat }} ₴</h5>
 
                             <div class="short_overview my-5">
                                 {{ object.description|safe }}
