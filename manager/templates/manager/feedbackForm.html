@@ -15,7 +15,7 @@
         <p>ФИО: {{ object.full_name }}</p>
         <p>Тема вопроса: {{ object.subject }}</p>
         <p>Email: {{ object.email }}</p>
-        <p>Вопрос: {{ object.question }}</p>
+        <p>Вопрос: {{ object.question|safe }}</p>
         {% if not object.answer %}
     <form method="post"> {% csrf_token %}
         {% for field in form %}
@@ -24,7 +24,7 @@
         <button type="submit" class="btn btn-primary">Отправить</button>
     </form>
         {% else %}
-            <p>Выданый ответ: {{ object.answer }}</p>
+            <p>Выданый ответ: {{ object.answer|safe  }}</p>
         {% endif %}
         <br>
         <a href="{% url 'manager:feedback' %}" class="btn btn-success">Назад</a>
