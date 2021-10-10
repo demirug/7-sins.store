@@ -4,12 +4,7 @@
 }
 
 body {
-  background: url("/static/image/background.png") no-repeat center center fixed;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  min-height: 80vh;
+  background: rgb(167, 168, 172);
 }
 
 .single-products-catagory {
