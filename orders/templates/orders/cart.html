@@ -10,6 +10,7 @@
 {% block content %}
 
     <center><h2>Корзина</h2></center>
+    <hr>
     <br>
 
     {% if products.items %}
@@ -52,7 +53,7 @@
     {% csrf_token %}
     <script src="{% static 'orders/js/priceCalculator.js' %}"></script>
     {% else %}
-        <center><h3>Empty</h3></center>
+        <center><h3>Пусто</h3></center>
     {% endif %}
 
 {% endblock %}
