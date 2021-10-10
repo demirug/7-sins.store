@@ -77,7 +77,6 @@ def changeOrder(request, pk):
 @login_required(login_url='/authorization/login/')
 def createProduct(request):
     form = ProductModelForm(data=request.POST or None, files=request.FILES or None)
-    print(form.instance)
     if form.is_valid():
         form.save()
         messages.success(request, 'Товар был успешно создан')
