@@ -20,3 +20,8 @@ urlpatterns = [
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+handler400 = "seven_sins_store.views.bad_request_view"
+handler403 = "seven_sins_store.views.permission_denied_view"
+handler404 = "seven_sins_store.views.not_found_view"
+handler500 = "seven_sins_store.views.server_error_view"
