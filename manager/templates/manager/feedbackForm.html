@@ -2,13 +2,18 @@
 
 {% block title %}Отправка ответа{% endblock %}
 
+{% block head %}
+    {% load static %}
+    <script src="{% static 'js/ckeditor/ckeditor.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 
     <div class="wrapper">
         <center><h4>Ответ на вопрос</h4></center>
         <hr>
-        <p>Имя: {{ object.full_name }}</p>
-        <p>Тема: {{ object.subject }}</p>
+        <p>ФИО: {{ object.full_name }}</p>
+        <p>Тема вопроса: {{ object.subject }}</p>
         <p>Email: {{ object.email }}</p>
         <p>Вопрос: {{ object.question }}</p>
         {% if not object.answer %}
@@ -24,5 +29,9 @@
         <br>
         <a href="{% url 'manager:feedback' %}" class="btn btn-success">Назад</a>
     </div>
+
+    <script>
+        CKEDITOR.replace('id_answer')
+    </script>
 
 {% endblock %}

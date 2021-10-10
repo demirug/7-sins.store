@@ -4,6 +4,7 @@
 {% block head %}
     {% load static %}
     <link rel="stylesheet" href={% static "feedback/css/style.css" %}>
+    <script src="{% static 'js/ckeditor/ckeditor.js' %}"></script>
 {% endblock %}
 {% block content %}
     <div class="feedback">
@@ -14,4 +15,9 @@
         <center><button type="submit" class="btn btn-primary">Отправить</button></center>
     </form>
     </div>
+
+        <script>
+
+        CKEDITOR.replace('id_question')
+    </script>
 {% endblock %}
