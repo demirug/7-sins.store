@@ -29,7 +29,7 @@
               {% for object in object_list %}
                 <div>
                     <tr>
-                      <th>{{ object.pk }}</th>
+                      <th style="color: {% if object.active %}green{% else %}red{% endif %}">{{ object.pk }}</th>
                       <td><a href="{% url 'view' object.slug %}">{{ object.name }}</a></td>
                       <td>{{ object.price }} гривен</td>
                         {% if object.quantity < 5 %}
