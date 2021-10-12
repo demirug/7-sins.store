@@ -7,6 +7,12 @@
 {% endblock %}
 
 {% block content %}
+
+    {% if not object.active %}
+        <br>
+        <div class="alert alert-secondary" role="alert">Товар архивирован</div>
+    {% endif %}
+
     <div class="main-content-wrapper clearfix">
 
         <div class="single-product-area section-padding-100 clearfix" style="margin-left: 100px">
@@ -31,7 +37,7 @@
                             <div class="product-meta-data">
                                 <div class="line"></div>
                                     <h2>{{ object.name }}</h2>
-                                {% if object.quantity > 0 %}
+                                {% if object.quantity > 0 and object.active %}
                                 <p style="color: darkgreen; font-size: 20px"> В наличии</p>
                                 {% else %}
                                     <p style="color: red; font-size: 20px"> Нет в наличии</p>
