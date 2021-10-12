@@ -14,3 +14,7 @@ class ProductDetailView(DetailView):
 class ProductListView(ListView):
     model = Product
     template_name = 'products/list.html'
+    ordering = ['pk']
+
+    def get_queryset(self):
+        return Product.objects.filter(active=True).order_by(*self.ordering)
