@@ -56,15 +56,17 @@ class Order(models.Model):
 
         elif self.status == self.StatusChoice.ACCEPTED:
             for ordItem in self.orderItems.all():
-                if ordItem.product.quantity == 0 or ordItem.product.quantity - ordItem.count < 0:
-                    raise ValidationError(f'Необходимого количество продукции {str(ordItem.product)} нет в наличии!')
-                ordItem.product.quantity -= ordItem.count
-                ordItem.product.save()
+                if ordItem.product:
+                    if ordItem.product.quantity == 0 or ordItem.product.quantity - ordItem.count < 0:
+                        raise ValidationError(f'Необходимого количество продукции {str(ordItem.product)} нет в наличии!')
+                    ordItem.product.quantity -= ordItem.count
+                    ordItem.product.save()
         elif self.status == self.StatusChoice.CANCELED:
             if self.__status == self.StatusChoice.ACCEPTED:
                 for ordItem in self.orderItems.all():
-                    ordItem.product.quantity += ordItem.count
-                    ordItem.product.save()
+                    if ordItem.product:
+                        ordItem.product.quantity += ordItem.count
+                        ordItem.product.save()
 
         self.sendEmail(self.status)
 

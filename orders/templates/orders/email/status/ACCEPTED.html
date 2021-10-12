@@ -23,11 +23,13 @@
           </thead>
           <tbody>
             {% for ordproduct in products %}
-                <tr class="product">
-                  <td>{{ ordproduct.product.name }}</td>
-                  <td>{{ ordproduct.price }}₴</td>
-                  <td>{{ ordproduct.count }}</td>
-                </tr>
+                {% if ordproduct.product %}
+                    <tr class="product">
+                      <td>{{ ordproduct.product.name }}</td>
+                      <td>{{ ordproduct.price }}₴</td>
+                      <td>{{ ordproduct.count }}</td>
+                    </tr>
+                {% endif %}
             {% endfor %}
           </tbody>
         </table>
