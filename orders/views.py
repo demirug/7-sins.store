@@ -64,7 +64,7 @@ def cart(request):
 def add_Product(request, pk):
     product = Product.objects.filter(pk=pk).first()
     if product:
-        if product.quantity == 0:
+        if product.quantity == 0 or not product.active:
             messages.error(request, 'Данного товара нет в наличии')
             return redirect('view', product.slug)
         else:
