@@ -12,13 +12,13 @@ class Product(models.Model):
     description = models.TextField(blank=True, verbose_name='Описание товара')
     quantity = models.PositiveIntegerField(verbose_name='Количество товара')
     image = models.ImageField(upload_to='product', null=True, blank=True)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return reverse('view', args=[self.slug])
-
 
     def validateSlug(self):
         # If slug not generated
