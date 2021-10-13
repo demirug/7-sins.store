@@ -1,0 +1,20 @@
+{% extends "manager/base.html" %}
+
+{% block title %}Подтверждение удаления{% endblock %}
+
+{% block content %}
+
+
+    <div class="wrapper">
+        <br>
+        <center><h4>Подтверждение удаления</h4></center>
+        <br>
+        <form method="POST" accept-charset="utf-8"> {% csrf_token %}
+        <center><p style="font-size: 20px">Вы уверены что хотите удалить товар "<span style="font-weight: bold"><a target="_blank" href="{% url 'view' object.slug %}">{{ object.name }}</a></span>"?</p></center>
+        <br>
+        <a  class="btn btn-success" href={% url 'manager:products' %}>Назад</a>
+        <button style="float: right" type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+    </div>
+
+{% endblock %}

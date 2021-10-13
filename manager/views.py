@@ -1,16 +1,18 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db import models
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import ListView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DeleteView
 
 from feedback.models import Feedback
 from manager.forms import ProductModelForm, OrderModelForm, FeedbackModelForm
 from orders.models import Order
 from products.models import Product
 
-__all__ = ('ProductListView', 'OrderListView', 'FeedbackListView', 'editProduct', 'createProduct', 'deleteProduct', 'changeOrder', 'answerFeedback',)
+__all__ = ('ProductListView', 'OrderListView', 'FeedbackListView', 'ProductDeleteView', 'editProduct', 'createProduct', 'changeOrder', 'answerFeedback',)
 
 
 class ProductListView(LoginRequiredMixin, ListView):
@@ -53,6 +55,18 @@ class FeedbackListView(LoginRequiredMixin, ListView):
                 default=1,
             )
         ).order_by('custom_order', 'timestamp')
+
+
+class ProductDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    login_url = '/authorization/login/'
+    model = Product
+    template_name = 'manager/productDelete.html'
+    success_message = 'Товар был успешно удален'
+    success_url = reverse_lazy('manager:products')
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super().delete(request, *args, **kwargs)
 
 
 @login_required(login_url='/authorization/login/')
@@ -104,14 +118,6 @@ def editProduct(request, pk):
                 for error in validationError:
                     messages.error(request, error)
         return render(request, 'manager/productForm.html', {'form': form, 'title': 'Редактирование товара'})
-
-
-@login_required(login_url='/authorization/login/')
-def deleteProduct(request, pk):
-    product = get_object_or_404(Product, pk=pk)
-    product.delete()
-    messages.success(request, 'Товар был успешно удален')
-    return redirect('manager:products')
 
 
 @login_required(login_url='/authorization/login/')
