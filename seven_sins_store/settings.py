@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'orders',
     'feedback',
     'manager',
+    'rest_framework',
+    'api_1'
 ]
 
 MIDDLEWARE = [
