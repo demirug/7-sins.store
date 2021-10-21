@@ -17,6 +17,7 @@ urlpatterns = [
     path('track/<int:pk>', TrackView.as_view(), name='track'),
     path('manager/', include(('manager.urls', 'manager'))),
     path('feedback/', feedback, name='feedback'),
+    path('api/v1/', include('api_1.urls'))
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
