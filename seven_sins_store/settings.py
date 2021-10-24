@@ -11,18 +11,19 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
-from dotenv import dotenv_values
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-dotenv_cfg = dotenv_values(".env")
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-f3)3wlo)&x)arq^j)j6+(qg&xm&pmhe_mjxmf)48k2@l89z8&!'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -139,9 +140,9 @@ MEDIA_URL = '/media/'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = dotenv_cfg['EMAIL_LOGIN']
-EMAIL_HOST_PASSWORD = dotenv_cfg['PASSWORD']
-DEFAULT_FROM_EMAIL = dotenv_cfg['FROM_EMAIL']
+EMAIL_HOST_USER = os.getenv("EMAIL_LOGIN")
+EMAIL_HOST_PASSWORD = os.getenv("PASSWORD")
+DEFAULT_FROM_EMAIL = os.getenv("FROM_EMAIL")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
