@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView, ListView
 
 __all__ = ('ProductDetailView', 'ProductListView')
@@ -6,9 +6,12 @@ __all__ = ('ProductDetailView', 'ProductListView')
 from products.models import Product
 
 
-class ProductDetailView(DetailView):
-    model = Product
-    template_name = 'products/detail.html'
+def ProductDetailView(request, slug, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if slug != product.slug:
+        return redirect(product.get_absolute_url())
+    print(product.price)
+    return render(request, 'products/detail.html', context={'object': product})
 
 
 class ProductListView(ListView):
