@@ -13,7 +13,7 @@ urlpatterns = [
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
     path('authorization/', include(('authorization.urls', 'authorization'))),
-    path('<slug:slug>', ProductDetailView.as_view(), name='view'),
+    path('<str:slug>/<int:pk>', ProductDetailView, name='view'),
     path('', ProductListView.as_view(), name='home'),
     path('orders/', include(('orders.urls', 'orders'))),
     path('cart/', cart, name='cart'),

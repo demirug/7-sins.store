@@ -29,9 +29,9 @@
         {% for product, amount in products.items %}
             <tr class="product">
               {% if product.image %}
-                <td><a href='{% url 'view' product.slug %}'><img src="{{ product.image.url }}" ></a></td>
+                <td><a href='{{ product.get_absolute_url }}'><img src="{{ product.image.url }}" ></a></td>
               {% else %}
-                    <td><a href='{% url 'view' product.slug %}'><img src="{% static "/image/noImage.png" %}"></a></td>
+                    <td><a href='{{ product.get_absolute_url }}'><img src="{% static "/image/noImage.png" %}"></a></td>
               {% endif %}
               <td>{{ product.name }}</td>
               <td><span id="price">{{ product.price }}</span>₴</td>

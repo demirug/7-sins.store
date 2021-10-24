@@ -14,7 +14,7 @@
             <div class="amado-pro-catagory clearfix">
                 {% for object in object_list %}
                     <div class="single-products-catagory clearfix">
-                        <a href="{% url 'view' object.slug %}">
+                        <a href="{{ object.get_absolute_url }}">
                             {% if object.image %}
                             <img src="{{ object.image.url }}" alt="">
                             {% else %}
