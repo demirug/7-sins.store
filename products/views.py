@@ -10,7 +10,6 @@ def ProductDetailView(request, slug, pk):
     product = get_object_or_404(Product, pk=pk)
     if slug != product.slug:
         return redirect(product.get_absolute_url())
-    print(product.price)
     return render(request, 'products/detail.html', context={'object': product})
 
 
