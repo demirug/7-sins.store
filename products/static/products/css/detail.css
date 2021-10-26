@@ -1,11 +1,8 @@
 
 * {
   margin: 0;
-  padding: 0; }
-
-body {
-  font-family: "helveticaneuemedium", serif;
-  font-size: 16px; }
+  padding: 0;
+}
 
 
 
@@ -45,6 +42,8 @@ img {
 
 /* :: 5.0 Welcome Area CSS */
 .main-content-wrapper {
+  font-family: "helveticaneuemedium", serif;
+  font-size: 16px;
   position: relative;
   z-index: 1;
   -webkit-transition-duration: 500ms;
