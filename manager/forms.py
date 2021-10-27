@@ -12,7 +12,7 @@ class ProductModelForm(forms.ModelForm):
     slug = forms.CharField(label='Slug', required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
     price = forms.IntegerField(label='Цена', widget=forms.NumberInput(attrs={'class': 'form-control'}))
     quantity = forms.IntegerField(label='Доступное количество товара', widget=forms.NumberInput(attrs={'class': 'form-control'}))
-    active = forms.BooleanField(label='Активен', required=False, widget=forms.CheckboxInput(attrs={'checked': True}))
+    active = forms.BooleanField(label='Активен', required=False, widget=forms.CheckboxInput(), initial=True)
 
     class Meta:
         model = Product
