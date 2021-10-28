@@ -6,7 +6,7 @@
     <br>
     <center>
         <h3>Ваш заказ оформлен, спасибо что выбрали нас. C вами скоро свяжется менеджер</h3>
-        <button class="btn btn-primary" onclick="location.href = '{% url 'track' pk %}'">Отследить</button>
+        <button class="btn btn-primary" onclick="location.href = '{% url 'orders:track' pk %}'">Отследить</button>
         <button class="btn btn-primary" onclick="location.href = '{% url 'home' %}'">Вернутся на главную</button>
     </center>
 {% endblock %}

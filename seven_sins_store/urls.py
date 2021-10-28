@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from feedback.views import feedback
-from orders.views import cart, TrackView
+from orders.views import cart
 from products.views import ProductDetailView, ProductListView
 
 urlpatterns = [
@@ -14,7 +14,6 @@ urlpatterns = [
     path('', ProductListView.as_view(), name='home'),
     path('orders/', include(('orders.urls', 'orders'))),
     path('cart/', cart, name='cart'),
-    path('track/<int:pk>', TrackView.as_view(), name='track'),
     path('manager/', include(('manager.urls', 'manager'))),
     path('feedback/', feedback, name='feedback'),
     path('api/v1/', include('api_1.urls'))

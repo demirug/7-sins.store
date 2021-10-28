@@ -7,4 +7,5 @@ urlpatterns = [
     path('remove/<int:pk>', remove_Product, name='remove'),
     path('update/', updateCart, name='update'),
     path('confirm/', confirm, name='confirm'),
+    path('track/<int:pk>', TrackView.as_view(), name='track'),
 ]
