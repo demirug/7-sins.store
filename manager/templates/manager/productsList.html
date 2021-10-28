@@ -20,6 +20,7 @@
             <tr>
               <th scope="col">pk</th>
               <th scope="col">Наименование</th>
+              <th scope="col">Артикул</th>
               <th scope="col">Цена</th>
               <th scope="col">Доступно</th>
               <th scope="col">&nbsp;</th>
@@ -31,6 +32,7 @@
                     <tr>
                       <th style="color: {% if object.active %}green{% else %}red{% endif %}">{{ object.pk }}</th>
                       <td><a target="_blank" href="{{ object.get_absolute_url }}">{{ object.name }}</a></td>
+                     <td>{{ object.article }}</td>
                       <td>{{ object.price }} гривен</td>
                         {% if object.quantity < 5 %}
                             <td style="color: red;">{{ object.quantity }}</td>
