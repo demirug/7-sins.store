@@ -1,7 +1,6 @@
-from django.core.mail import EmailMultiAlternatives
 from django.db import models
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
+
+from .tasks import send_email_task
 
 
 class Feedback(models.Model):
@@ -18,18 +17,4 @@ class Feedback(models.Model):
 
     def clean(self):
         if self.answer != self.__answer:
-            self.sendEmail()
-
-    def sendEmail(self):
-        subject, from_email, to = 'Вопрос на сайте 7-sins.store', 'Answer Question', self.email
-
-        html_content = render_to_string('feedback/email/feedback.html', {
-            'name': self.full_name,
-            'question': self.question,
-            'answer': self.answer
-        })
-
-        text_content = strip_tags(html_content)
-        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
+            send_email_task.delay(self.email, self.question, self.answer)
