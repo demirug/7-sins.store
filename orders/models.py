@@ -1,8 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.core.mail import EmailMultiAlternatives
 from django.db import models
-from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 from django.utils.translation import gettext_lazy as _
 
 
@@ -51,6 +48,8 @@ class Order(models.Model):
         self.__status = self.status
 
     def __updateStatus(self):
+        from orders.tasks import send_email_task
+
         if self.__status == self.StatusChoice.DONE or self.__status == self.StatusChoice.CANCELED or self.status == self.StatusChoice.NEW:
             raise ValidationError(f'Изменение на данный статус запрещено')
 
@@ -67,8 +66,7 @@ class Order(models.Model):
                     if ordItem.product:
                         ordItem.product.quantity += ordItem.count
                         ordItem.product.save()
-
-        self.sendEmail(self.status)
+        send_email_task.delay(self.status, self.pk)
 
     def clean(self):
         if self.status != self.__status:
@@ -80,16 +78,3 @@ class Order(models.Model):
 
     def __str__(self):
         return 'Заказ №' + str(self.pk) + ' | ' + self.status
-
-    def sendEmail(self, status: StatusChoice):
-        subject, from_email, to = 'Заказ на сайте 7-sins.store', 'Track Info', self.email
-
-        html_content = render_to_string('orders/email/status/' + status + '.html', {
-            'pk': self.pk,
-            'products': self.orderItems.all(),
-            'totalPrice': self.price
-        })
-        text_content = strip_tags(html_content)
-        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()

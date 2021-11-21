@@ -6,6 +6,7 @@ from django.views.generic import DetailView
 from orders.forms import OrderModelForm
 from orders.models import OrderItem, Order
 from orders.cart import Cart
+from orders.tasks import send_email_task
 from products.models import Product
 
 __all__ = ('cart', 'add_Product', 'updateCart', 'remove_Product', 'confirm', 'TrackView')
@@ -33,7 +34,7 @@ def confirm(request):
             order.orderItems.add(item)
         order.price = totalPrice
         order.save()
-        order.sendEmail(order.StatusChoice.NEW)
+        send_email_task.delay(order.StatusChoice.NEW, order.pk)
         cart.clear()
         return render(request, 'orders/accepted.html', context={'pk': order.pk})
     else:
