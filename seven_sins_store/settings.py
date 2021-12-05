@@ -29,7 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -119,7 +118,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -163,6 +161,8 @@ EMAIL_PORT = os.getenv("EMAIL_PORT")
 EMAIL_HOST_USER = os.getenv("EMAIL_LOGIN")
 EMAIL_HOST_PASSWORD = os.getenv("PASSWORD")
 DEFAULT_FROM_EMAIL = os.getenv("FROM_EMAIL")
+
+ADMIN_EMAILS = os.getenv('ADMIN_EMAILS')
 
 
 # Default primary key field type
