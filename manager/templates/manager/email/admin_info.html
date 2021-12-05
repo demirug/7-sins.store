@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <body>
+        <center>
+            <h3>На сайте 7-sins.store были оформлены новые заказы</h3>
+        </center>
+        <br>
+        <hr>
+        {% for order in objects %}
+            <h4>Заказ №{{ order.id }}</h4>
+        <table class="table">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Наименование</th>
+              <th scope="col">Цена</th>
+              <th scope="col">Количество</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ordproduct in order.orderItems.all %}
+                {% if ordproduct.product %}
+                    <tr class="product">
+                      <td>{{ ordproduct.product.name }}</td>
+                      <td>{{ ordproduct.price }}₴</td>
+                      <td>{{ ordproduct.count }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+        <br>
+        <span>Общая стоимость заказа: {{ order.price }} грн</span>
+        <hr>
+        {% endfor %}
+
+    </body>
+</html>
